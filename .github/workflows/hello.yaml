@@ -1,0 +1,19 @@
+name: Hello workflows
+on:
+  push: 
+    branches:
+      - feat/ci-cd 
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step setup node version 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Before checkout 
+        run: ls
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: After checkout
+        run: ls
