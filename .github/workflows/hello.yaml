@@ -11,5 +11,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
-      - name: Step check node version
-        run: node -v
+      - name: Before checkout 
+        run: ls
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: After checkout
+        run: ls
