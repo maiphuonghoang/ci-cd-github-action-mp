@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.get('/', async (req, res) => {
-  res.json({message: "Hello"})
+  res.json({message: "Hello New"})
 });
 
 app.get('/api/article', async (req, res) => {
