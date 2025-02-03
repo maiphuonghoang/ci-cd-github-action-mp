@@ -11,7 +11,7 @@ defaults:
     working-directory: ./backend
 jobs:
   run-quanlity-code:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Runner free 
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
