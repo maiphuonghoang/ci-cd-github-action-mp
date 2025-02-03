@@ -49,7 +49,6 @@ app.post('/api/article', async (req, res) => {
   }
 });
 
-
 app.put('/api/article', async (req, res) => {
   const { title, content } = req.body;
 
