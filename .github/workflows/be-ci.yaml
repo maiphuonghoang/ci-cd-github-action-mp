@@ -1,7 +1,7 @@
 name: BE-CI
 run-name: BE-CI
 on:
-  push: 
+  pull_request: 
     branches:
       - 'develop'
     paths:
