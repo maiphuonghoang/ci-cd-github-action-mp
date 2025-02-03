@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Checkout # checkout để thực hiện build image 
       uses: actions/checkout@v4.2.2
-      run: |  
+    - run: |  
         ls
         echo "Build image"
   deploy:
@@ -25,6 +25,6 @@ jobs:
     steps:
     - name: Checkout # checkout để thực hiện build image 
       uses: actions/checkout@v4.2.2
-      run: |  
+    - run: |  
         ls
         echo "Run image"
