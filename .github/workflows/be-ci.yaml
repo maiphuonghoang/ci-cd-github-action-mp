@@ -11,7 +11,7 @@ defaults:
     working-directory: ./backend
 jobs:
   run-quanlity-code:
-    runs-on: ubuntu-latest # Runner free 
+    runs-on: ubuntu-latest # Runner free: docker, node java, python 
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -19,7 +19,17 @@ jobs:
         run: |
           echo "Start lint..." 
           echo "Install tool..." #Install tool if github action is not built-in 
-          # npm install globals
-          # npm install -g eslint 
+          npm install globals
+          npm install -g eslint 
           eslint *.js --fix
           echo "Lint done."
+          
+  run-unit-test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4.2.2
+        - name: Run unit test
+          run: |
+            echo "Start run unit test..." 
+            echo "Run UT done."
