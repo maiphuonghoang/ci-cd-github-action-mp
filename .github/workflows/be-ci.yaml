@@ -32,4 +32,6 @@ jobs:
         - name: Run unit test
           run: |
             echo "Start run unit test..." 
+            npm install jest 
+            npx jest
             echo "Run UT done."
