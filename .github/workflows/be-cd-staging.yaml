@@ -2,10 +2,11 @@ name: BE deploy staging
 run-name: BE deploy staging
 on:
   push:
-    - 'staging' #ấn vào merge cũng là 1 hành động push code lên 
-    # yêu cầu merge là pull request 
-  paths: 
-    - backend/**
+    branches:
+      - 'staging' #ấn vào merge cũng là 1 hành động push code lên 
+      # yêu cầu merge là pull request 
+    paths: 
+      - backend/**
 defaults:
   run:
     working-directory: ./backend
