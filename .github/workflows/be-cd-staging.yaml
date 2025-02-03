@@ -19,6 +19,7 @@ jobs:
     - name: Using docker to check convention code 
       run: |  
         ls
+        echo "${{ secrets.ENV-STAGING }}" >> .env 
         docker compose build node-container
         echo "Build image"
 
