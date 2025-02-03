@@ -27,6 +27,11 @@ const Article = mongoose.model('Article', articleSchema);
 // Body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+app.get('/', async (req, res) => {
+  res.json({message: "Hello"})
+});
+
 app.get('/api/article', async (req, res) => {
   const article = await Article.findOne({id: id});
   res.json(article)
