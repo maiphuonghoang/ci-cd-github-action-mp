@@ -1,0 +1,30 @@
+name: BE deploy uat branch
+run-name: BE deploy uat branch
+on:
+  push:
+    branches:
+      - uat 
+    paths: 
+      - backend/**
+defaults:
+  run:
+    working-directory: ./backend
+jobs:
+  build:
+    runs-on: [self-hosted, backend-server-staging] #label của runner để phân biệt các runner khác nhau 
+    steps:
+    - name: Checkout # checkout để thực hiện build image 
+      uses: actions/checkout@v4.2.2
+    - run: |  
+        ls
+        echo "Build image"
+  deploy:
+    runs-on: [self-hosted, backend-server-staging]
+    needs: [ build ] 
+    environment: uat 
+    steps:
+    - name: Checkout # checkout để thực hiện build image 
+      uses: actions/checkout@v4.2.2
+    - run: |  
+        ls
+        echo "Run image"

@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const Sum = require('./utils');
 const app = express();
 const port = process.env.PORT || 3001;
+// uat env
 console.log(Sum(102, 106));
 const mongoUri = process.env.mongoUri || 'mongodb://admin:admin@localhost:27017/admin'
 mongoose.connect(mongoUri, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true, 
 }).then(() => {
   console.log('MongoDB connected!');
 }).catch((err) => {
@@ -23,15 +24,18 @@ const articleSchema = new mongoose.Schema({
 });
 const Article = mongoose.model('Article', articleSchema);
 
-
 // Body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+
+app.get('/', async (req, res) => {
+  res.json({message: "Hello New"})
+});
+
 app.get('/api/article', async (req, res) => {
   const article = await Article.findOne({id: id});
   res.json(article)
 });
-
 
 app.post('/api/article', async (req, res) => {
   const { title, content } = req.body;
@@ -49,7 +53,6 @@ app.post('/api/article', async (req, res) => {
     res.status(500).json({ error: 'Failed to update article' });
   }
 });
-
 
 app.put('/api/article', async (req, res) => {
   const { title, content } = req.body;
