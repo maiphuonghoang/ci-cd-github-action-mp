@@ -1,0 +1,22 @@
+name: BE-CI
+run-name: BE-CI
+on:
+  push: 
+    branches:
+      - 'develop'
+    paths:
+      - backend/**
+defaults:
+  run:
+    working-directory: ./backend
+jobs:
+  run-quanlity-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+      - name: Using docker to check convention code 
+        run: |
+          echo "Start lint..." 
+          echo "Install tool..." #Install tool if github action is not built-in 
+          echo "Lint done."
