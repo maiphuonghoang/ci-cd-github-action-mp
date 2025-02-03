@@ -19,4 +19,6 @@ jobs:
         run: |
           echo "Start lint..." 
           echo "Install tool..." #Install tool if github action is not built-in 
+          npm install -g eslint 
+          eslint *.js --fix
           echo "Lint done."
