@@ -7,5 +7,5 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Step hi
-        run: echo "Hello"
+      name: Step check node version
+        run: node -v 
