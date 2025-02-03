@@ -1,10 +1,9 @@
-name: BE deploy staging branch
-run-name: BE deploy staging branch
+name: BE deploy uat branch
+run-name: BE deploy uat branch
 on:
-  push: #ấn vào merge cũng là 1 hành động push code lên 
-        # yêu cầu merge là pull request
+  push:
     branches:
-      - staging 
+      - uat 
     paths: 
       - backend/**
 defaults:
@@ -16,11 +15,8 @@ jobs:
     steps:
     - name: Checkout # checkout để thực hiện build image 
       uses: actions/checkout@v4.2.2
-    - name: Using docker to check convention code 
       run: |  
         ls
-        echo "${{ secrets.ENV_STAGING }}" >> .env 
-        docker compose build node-container
         echo "Build image"
   deploy:
     runs-on: [self-hosted, backend-server-staging]
@@ -29,10 +25,6 @@ jobs:
     steps:
     - name: Checkout # checkout để thực hiện build image 
       uses: actions/checkout@v4.2.2
-    - name: Using docker to check convention code 
       run: |  
-        echo "Deploy"
         ls
-        echo "${{ secrets.ENV_STAGING }}" >> .env 
-        docker compose up -d 
         echo "Run image"
