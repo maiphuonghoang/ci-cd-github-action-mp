@@ -1,0 +1,20 @@
+name: Docker Image CI for GHCR
+
+on:
+    push:
+        branches: ['main']
+
+jobs:
+    build_and_publish:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Checkout the repo
+              uses: actions/checkout@v4
+            - name: Build and push the image
+              run: echo "Building and pushing the image..."
+            - name: Login to ghcr.io and push image
+              run: |
+                echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u maiphuonghoang --password-stdin
+                docker build . --tag ghcr.io/maiphuonghoang/eikh-ci-cd:v1
+                docker push ghcr.io/maiphuonghoang/eikh-ci-cd:v1
