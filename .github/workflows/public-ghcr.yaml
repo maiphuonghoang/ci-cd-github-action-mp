@@ -19,6 +19,8 @@ jobs:
               run: echo "Building and pushing the image..."
             - name: Login to ghcr.io and push image
               run: |
+                set -x  # In ra lệnh trước khi chạy
+                echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u maiphuonghoang --password-stdin
                 echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u maiphuonghoang --password-stdin
                 docker build . --tag ghcr.io/maiphuonghoang/eikh-ci-cd:v1
                 docker push ghcr.io/maiphuonghoang/eikh-ci-cd:v1
