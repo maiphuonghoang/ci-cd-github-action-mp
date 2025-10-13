@@ -14,17 +14,14 @@ jobs:
 
       - name: Run GitLab DAST scan
         run: |
+          mkdir -p dast-report
           docker run --rm \
             -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
             -e DAST_FULL_SCAN_ENABLED="true" \
-            -e DAST_AUTH_URL="" \
-            -e DAST_AUTH_USERNAME="" \
-            -e DAST_AUTH_PASSWORD="" \
-            -e DAST_EXCLUDE_URLS="" \
             -e DAST_DEBUG="true" \
             -v "$(pwd)/dast-report:/tmp" \
             registry.gitlab.com/gitlab-org/security-products/dast:latest
-          
+
       - name: Upload DAST report artifact
         uses: actions/upload-artifact@v4
         with:
