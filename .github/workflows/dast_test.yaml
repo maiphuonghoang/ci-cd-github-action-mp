@@ -1,4 +1,4 @@
-name: GitLab DAST Scan
+name: GitLab DAST Scanning
 
 on:
   workflow_dispatch:
