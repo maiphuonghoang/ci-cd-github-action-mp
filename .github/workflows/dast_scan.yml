@@ -56,6 +56,6 @@ jobs:
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GHCR_PAT }}
+          github_token: ${{ secrets.DAST_PAT }}
           publish_dir: ./dast-report
           publish_branch: gh-pages
