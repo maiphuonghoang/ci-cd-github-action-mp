@@ -28,7 +28,7 @@
 #           name: dast-report
 #           path: dast-report
 
-name: DAST Scan with GitLab
+name: Demo DAST Scan with GitLab
 
 on:
   workflow_dispatch:
