@@ -45,14 +45,14 @@ jobs:
       - name: Run GitLab DAST scan
         run: |
           mkdir -p dast-report
-            docker run --rm \
-              -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
-              -e DAST_FULL_SCAN_ENABLED="true" \
-              -e DAST_DEBUG="true" \
-              -e DAST_REPORT_FORMAT="json"
-              -e DAST_REPORT_PATH="/tmp/dast-report/report.json"
-              -v "$(pwd)/dast-report:/tmp/dast-report" \
-              registry.gitlab.com/gitlab-org/security-products/dast:latest
+          docker run --rm \
+            -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
+            -e DAST_FULL_SCAN_ENABLED="true" \
+            -e DAST_DEBUG="true" \
+            -e DAST_REPORT_FORMAT="json"
+            -e DAST_REPORT_PATH="/tmp/dast-report/report.json"
+            -v "$(pwd)/dast-report:/tmp/dast-report" \
+            registry.gitlab.com/gitlab-org/security-products/dast:latest
 
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
