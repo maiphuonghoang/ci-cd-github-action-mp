@@ -1,0 +1,32 @@
+name: DAST Scan with GitLab
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  dast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run GitLab DAST scan
+        run: |
+          docker run --rm \
+            -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
+            -e DAST_FULL_SCAN_ENABLED="true" \
+            -e DAST_AUTH_URL="" \
+            -e DAST_AUTH_USERNAME="" \
+            -e DAST_AUTH_PASSWORD="" \
+            -e DAST_EXCLUDE_URLS="" \
+            -e DAST_DEBUG="true" \
+            -v "$(pwd)/dast-report:/tmp" \
+            registry.gitlab.com/gitlab-org/security-products/dast:latest
+          
+      - name: Upload DAST report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dast-report
+          path: dast-report
