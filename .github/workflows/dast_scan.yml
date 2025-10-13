@@ -28,6 +28,38 @@
 #           name: dast-report
 #           path: dast-report
 
+# name: DAST Scan with GitLab
+
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches: [main]
+
+# jobs:
+#   dast:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Run GitLab DAST scan
+#         run: |
+#           mkdir -p dast-report
+#           docker run --rm \
+#             -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
+#             -e DAST_FULL_SCAN_ENABLED="true" \
+#             -e DAST_DEBUG="true" \
+#             -e DAST_REPORT_FORMAT="json"
+#             -e DAST_REPORT_PATH="/tmp/dast-report/report.json"
+#             -v "$(pwd)/dast-report:/tmp/dast-report" \
+#             registry.gitlab.com/gitlab-org/security-products/dast:latest
+
+#       - name: Deploy report to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.DAST_PAT }}
+#           publish_dir: ./dast-report
+
 name: DAST Scan with GitLab
 
 on:
@@ -42,20 +74,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Prepare report folder
+        run: mkdir -p "${GITHUB_WORKSPACE}/dast-report"
+
       - name: Run GitLab DAST scan
         run: |
-          mkdir -p dast-report
           docker run --rm \
             -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
             -e DAST_FULL_SCAN_ENABLED="true" \
             -e DAST_DEBUG="true" \
-            -e DAST_REPORT_FORMAT="json"
-            -e DAST_REPORT_PATH="/tmp/dast-report/report.json"
-            -v "$(pwd)/dast-report:/tmp/dast-report" \
+            -e DAST_REPORT_FORMAT="json" \
+            -e DAST_REPORT_PATH="/tmp/dast-report/report.json" \
+            -v "${GITHUB_WORKSPACE}/dast-report:/tmp/dast-report" \
             registry.gitlab.com/gitlab-org/security-products/dast:latest
 
-      - name: Deploy report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: List generated files
+        run: ls -la dast-report
+
+      - name: Upload DAST JSON report as artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.DAST_PAT }}
-          publish_dir: ./dast-report
+          name: dast-report
+          path: dast-report
