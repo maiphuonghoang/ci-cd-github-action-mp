@@ -1,3 +1,33 @@
+# name: DAST Scan with GitLab
+
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches: [main]
+
+# jobs:
+#   dast:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Run GitLab DAST scan
+#         run: |
+#           mkdir -p dast-report
+#           docker run --rm \
+#             -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
+#             -e DAST_FULL_SCAN_ENABLED="true" \
+#             -e DAST_DEBUG="true" \
+#             -v "$(pwd)/dast-report:/tmp" \
+#             registry.gitlab.com/gitlab-org/security-products/dast:latest
+
+#       - name: Upload DAST report artifact
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: dast-report
+#           path: dast-report
+
 name: DAST Scan with GitLab
 
 on:
@@ -19,11 +49,13 @@ jobs:
             -e DAST_WEBSITE="https://juice-shop.herokuapp.com" \
             -e DAST_FULL_SCAN_ENABLED="true" \
             -e DAST_DEBUG="true" \
+            -e DAST_REPORT_FORMAT="html" \
             -v "$(pwd)/dast-report:/tmp" \
             registry.gitlab.com/gitlab-org/security-products/dast:latest
 
-      - name: Upload DAST report artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v7
         with:
-          name: dast-report
-          path: dast-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dast-report
+          publish_branch: gh-pages
